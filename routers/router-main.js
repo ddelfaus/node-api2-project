@@ -124,7 +124,52 @@ router.post("/", (req, res) => {
       });
   });
 
+  router.delete('/:id', (req,res) => {
+    const id = req.params.id
 
+    db.remove(id)
+    .then(count => {
+        if (count > 0) {
+            res.status(200).json({ message: "The post has been deleted" })  
+        }
+        res.status(404).json({ message: "Post not found" });
+    })
+    .catch(error => {
+        res.status(500).json({
+            message: "Error removing the post"
+        })
+    })
+})
+    
+
+
+
+
+
+  // put
+
+  router.put("/:id", (req, res) => {
+    const changes = req.body
+    const id = req.params.id
+
+
+
+    db
+    .update(id,changes)
+    .then(edit => {
+        if (edit) {
+            res.status(201).json({...changes, id: id});
+        }
+        res.status(404).json({ error: "post not found" })
+      })
+      .catch(error => {
+        // log error to database
+        console.log(error);
+        res.status(500).json({
+          message: "Error updating the post"
+        });
+      });
+  });
   
 
   
