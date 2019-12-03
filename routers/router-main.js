@@ -17,11 +17,11 @@ router.get("/", (req, res) => {
 
     console.log(req.query);
     db.find(req.query)
-      .then(db => {
-        res.status(200).json(db);
+      .then(post => {
+        res.status(200).json(post);
       })
       .catch(error => {
-        // log error to database
+      
         console.log(error);
         res.status(500).json({
           message: "Error retrieving the db"
@@ -29,6 +29,52 @@ router.get("/", (req, res) => {
       });
   });
   
+
+  router.get("/:id", (req, res) => {
+    const id = req.params.id
+
+    db
+    .findById(id)
+
+    .then(post => {
+        if(post) {
+            res.status(200).json(post);
+        }
+        res.status(404).json({ error: "id not returned" })
+      })
+      .catch(error => {
+     
+        console.log(error);
+        res.status(500).json({
+          message: "Error retrieving the db"
+        });
+      });
+  });
+  
+
+  router.get("/:id/comments", (req, res) => {
+    const id = req.params.id
+
+    db
+    .findCommentById(id)
+
+    .then(post => {
+        if(post) {
+            res.status(200).json(post);
+        }
+        res.status(404).json({ error: "id not returned" })
+      })
+      .catch(error => {
+     
+        console.log(error);
+        res.status(500).json({
+          message: "Error retrieving the db"
+        });
+      });
+  });
+  
+
+
 
 
 
