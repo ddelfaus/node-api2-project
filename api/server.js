@@ -1,5 +1,6 @@
 const express = require("express");
 
+const routerMain = require("../routers/router-main.js")
 
 const server = express();
 
@@ -11,5 +12,6 @@ server.get("/", (req, res) => {
 });
 
 
+server.use("/api/posts", routerMain)
 
 module.exports = server; 
